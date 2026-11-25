@@ -1,0 +1,16 @@
+benchmark_variant: vl_matched
+scenario: D
+n_samples: 5000
+data_seed: 0
+split_seed: 0
+image:
+  size: 224
+  channels: 3
+  render_chunk_size: 128
+text:
+  noise: 1.0
+  template_set: v1
+split:
+  train: 0.6
+  validation: 0.2
+  test: 0.2

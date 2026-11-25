@@ -1,0 +1,622 @@
+{
+ "image": {
+  "dtype": "float32",
+  "from_fixture": "images.npz['images'][image_index] / 255, replicated to every channel",
+  "range": [
+   0.0,
+   1.0
+  ],
+  "shape": [
+   3,
+   224,
+   224
+  ]
+ },
+ "image_tolerance_uint8": 1,
+ "item_keys": [
+  "sample_id",
+  "image",
+  "text",
+  "target",
+  "availability",
+  "metadata"
+ ],
+ "metadata_policy": "item['metadata'] is {} unless load_split(..., with_metadata=True); the fixture stores the analysis metadata for checks only, never as model input",
+ "render_version": "render_v1",
+ "scenarios": {
+  "A": {
+   "config": {
+    "benchmark_variant": "vl_matched",
+    "data_seed": 0,
+    "image": {
+     "channels": 3,
+     "render_chunk_size": 128,
+     "size": 224
+    },
+    "n_samples": 5000,
+    "scenario": "A",
+    "split": {
+     "test": 0.2,
+     "train": 0.6,
+     "validation": 0.2
+    },
+    "split_seed": 0,
+    "text": {
+     "noise": 1.0,
+     "template_set": "v1"
+    }
+   },
+   "config_hash": "070613a87b9978cc0f5954ee88f6e8ebd13266a8b6c7e539656da9f2cd2a3975",
+   "items": [
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 0,
+     "metadata": {
+      "nuisance": 0.7298002402966288,
+      "obs_img": 0.024385934411179533,
+      "obs_txt": -0.45952334472254774,
+      "oracle_pred": 0,
+      "render_version": "render_v1",
+      "split": "train",
+      "template_id": 0,
+      "template_set": "v1",
+      "text_category": 0,
+      "z_img": -0.7671098313763971,
+      "z_txt": -0.7671098313763971
+     },
+     "sample_id": "vl_matched/A/0/000004",
+     "split": "train",
+     "target": 0,
+     "text": "the code word is maple"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 1,
+     "metadata": {
+      "nuisance": 0.7413630755732086,
+      "obs_img": -0.30700471261282875,
+      "obs_txt": 0.2068342641664237,
+      "oracle_pred": 1,
+      "render_version": "render_v1",
+      "split": "train",
+      "template_id": 0,
+      "template_set": "v1",
+      "text_category": 1,
+      "z_img": -0.6611821345696688,
+      "z_txt": -0.6611821345696688
+     },
+     "sample_id": "vl_matched/A/0/000008",
+     "split": "train",
+     "target": 0,
+     "text": "the code word is cedar"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 2,
+     "metadata": {
+      "nuisance": -1.0525268087948725,
+      "obs_img": 0.3047808059975677,
+      "obs_txt": -1.3752683419812353,
+      "oracle_pred": 0,
+      "render_version": "render_v1",
+      "split": "validation",
+      "template_id": 0,
+      "template_set": "v1",
+      "text_category": 0,
+      "z_img": 0.032615632296648385,
+      "z_txt": 0.032615632296648385
+     },
+     "sample_id": "vl_matched/A/0/000000",
+     "split": "validation",
+     "target": 1,
+     "text": "the code word is maple"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 3,
+     "metadata": {
+      "nuisance": -0.17207341181847247,
+      "obs_img": -2.3737321744618516,
+      "obs_txt": -0.80199330501674,
+      "oracle_pred": 0,
+      "render_version": "render_v1",
+      "split": "validation",
+      "template_id": 1,
+      "template_set": "v1",
+      "text_category": 0,
+      "z_img": -1.487369568932608,
+      "z_txt": -1.487369568932608
+     },
+     "sample_id": "vl_matched/A/0/000003",
+     "split": "validation",
+     "target": 0,
+     "text": "this record is tagged maple"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 4,
+     "metadata": {
+      "nuisance": -0.8067894816033607,
+      "obs_img": -0.09736184011021587,
+      "obs_txt": 0.5529768391291743,
+      "oracle_pred": 1,
+      "render_version": "render_v1",
+      "split": "test",
+      "template_id": 1,
+      "template_set": "v1",
+      "text_category": 1,
+      "z_img": 0.4374796590480553,
+      "z_txt": 0.4374796590480553
+     },
+     "sample_id": "vl_matched/A/0/000001",
+     "split": "test",
+     "target": 1,
+     "text": "this record is tagged cedar"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 5,
+     "metadata": {
+      "nuisance": -0.3144250791849387,
+      "obs_img": -0.02595130053216166,
+      "obs_txt": -0.8084694781741151,
+      "oracle_pred": 0,
+      "render_version": "render_v1",
+      "split": "test",
+      "template_id": 1,
+      "template_set": "v1",
+      "text_category": 0,
+      "z_img": -0.6489716309508334,
+      "z_txt": -0.6489716309508334
+     },
+     "sample_id": "vl_matched/A/0/000002",
+     "split": "test",
+     "target": 0,
+     "text": "this record is tagged maple"
+    }
+   ],
+   "manifest_hash": "e7ee7093502346acb71daef3fea1a161d02ac2e49865e29e03a4dba58c54a3c3",
+   "oracle": {
+    "accuracy": {
+     "test": 0.829,
+     "train": 0.828,
+     "validation": 0.827
+    },
+    "inputs": [
+     "obs_img",
+     "text_category"
+    ],
+    "limitations": [
+     "obs_img is the latent image observation before pixel noise and rendering, so the oracle is an optimistic ceiling for image models (same convention as the legacy latent_observation_oracle)",
+     "it assumes the generative model and noise levels are known exactly",
+     "the text side is exact: it reads only the category stated by the caption, not obs_txt"
+    ],
+    "name": "text_aware_oracle",
+    "rule": "Bayes decision for y given obs_img and the caption category under the declared generative model"
+   },
+   "split_counts": {
+    "test": 1000,
+    "train": 3000,
+    "validation": 1000
+   }
+  },
+  "C": {
+   "config": {
+    "benchmark_variant": "vl_matched",
+    "data_seed": 0,
+    "image": {
+     "channels": 3,
+     "render_chunk_size": 128,
+     "size": 224
+    },
+    "n_samples": 5000,
+    "scenario": "C",
+    "split": {
+     "test": 0.2,
+     "train": 0.6,
+     "validation": 0.2
+    },
+    "split_seed": 0,
+    "text": {
+     "noise": 1.0,
+     "template_set": "v1"
+    }
+   },
+   "config_hash": "41e59e9e319dd0f45c09108735b0fbe0c9b7010606611fc3555d494573b4049b",
+   "items": [
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 6,
+     "metadata": {
+      "nuisance": 0.8332323565611589,
+      "obs_img": 1.6702803392104184,
+      "obs_txt": -2.1562376645853063,
+      "oracle_pred": 1,
+      "render_version": "render_v1",
+      "split": "train",
+      "template_id": 0,
+      "template_set": "v1",
+      "text_category": 0,
+      "z_img": 1.0,
+      "z_txt": -1.0
+     },
+     "sample_id": "vl_matched/C/0/000006",
+     "split": "train",
+     "target": 1,
+     "text": "the code word is maple"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 7,
+     "metadata": {
+      "nuisance": 0.7087394006868423,
+      "obs_img": 1.122570551111178,
+      "obs_txt": -0.9918983138931394,
+      "oracle_pred": 1,
+      "render_version": "render_v1",
+      "split": "train",
+      "template_id": 1,
+      "template_set": "v1",
+      "text_category": 0,
+      "z_img": 1.0,
+      "z_txt": -1.0
+     },
+     "sample_id": "vl_matched/C/0/000007",
+     "split": "train",
+     "target": 1,
+     "text": "this record is tagged maple"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 8,
+     "metadata": {
+      "nuisance": -1.0525268087948725,
+      "obs_img": 1.2041238802756895,
+      "obs_txt": -2.0559129807084124,
+      "oracle_pred": 1,
+      "render_version": "render_v1",
+      "split": "validation",
+      "template_id": 0,
+      "template_set": "v1",
+      "text_category": 0,
+      "z_img": 1.0,
+      "z_txt": -1.0
+     },
+     "sample_id": "vl_matched/C/0/000000",
+     "split": "validation",
+     "target": 1,
+     "text": "the code word is maple"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 9,
+     "metadata": {
+      "nuisance": 0.7298002402966288,
+      "obs_img": -0.40637817565931755,
+      "obs_txt": -0.769310135009613,
+      "oracle_pred": 0,
+      "render_version": "render_v1",
+      "split": "validation",
+      "template_id": 0,
+      "template_set": "v1",
+      "text_category": 0,
+      "z_img": -1.0,
+      "z_txt": -1.0
+     },
+     "sample_id": "vl_matched/C/0/000004",
+     "split": "validation",
+     "target": 0,
+     "text": "the code word is maple"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 10,
+     "metadata": {
+      "nuisance": -0.8067894816033607,
+      "obs_img": 0.5988688756312968,
+      "obs_txt": -0.9133771149391609,
+      "oracle_pred": 1,
+      "render_version": "render_v1",
+      "split": "test",
+      "template_id": 1,
+      "template_set": "v1",
+      "text_category": 0,
+      "z_img": 1.0,
+      "z_txt": -1.0
+     },
+     "sample_id": "vl_matched/C/0/000001",
+     "split": "test",
+     "target": 1,
+     "text": "this record is tagged maple"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 11,
+     "metadata": {
+      "nuisance": -0.3144250791849387,
+      "obs_img": 1.4672652478140038,
+      "obs_txt": 0.8803766145825388,
+      "oracle_pred": 0,
+      "render_version": "render_v1",
+      "split": "test",
+      "template_id": 1,
+      "template_set": "v1",
+      "text_category": 1,
+      "z_img": 1.0,
+      "z_txt": 1.0
+     },
+     "sample_id": "vl_matched/C/0/000002",
+     "split": "test",
+     "target": 0,
+     "text": "this record is tagged cedar"
+    }
+   ],
+   "manifest_hash": "0a075a1fcb0d905fd7b774194ec21643b01d49b1f2e40f32942e670a523521b0",
+   "oracle": {
+    "accuracy": {
+     "test": 0.916,
+     "train": 0.909,
+     "validation": 0.905
+    },
+    "inputs": [
+     "obs_img",
+     "text_category"
+    ],
+    "limitations": [
+     "obs_img is the latent image observation before pixel noise and rendering, so the oracle is an optimistic ceiling for image models (same convention as the legacy latent_observation_oracle)",
+     "it assumes the generative model and noise levels are known exactly",
+     "the text side is exact: it reads only the category stated by the caption, not obs_txt"
+    ],
+    "name": "text_aware_oracle",
+    "rule": "Bayes decision for y given obs_img and the caption category under the declared generative model"
+   },
+   "split_counts": {
+    "test": 1000,
+    "train": 3000,
+    "validation": 1000
+   }
+  },
+  "E": {
+   "config": {
+    "benchmark_variant": "vl_matched",
+    "data_seed": 0,
+    "image": {
+     "channels": 3,
+     "render_chunk_size": 128,
+     "size": 224
+    },
+    "n_samples": 5000,
+    "scenario": "E",
+    "split": {
+     "test": 0.2,
+     "train": 0.6,
+     "validation": 0.2
+    },
+    "split_seed": 0,
+    "text": {
+     "noise": 1.0,
+     "template_set": "v1"
+    }
+   },
+   "config_hash": "824e11d5e50ada59876a1639d5c7f04cf02d6d4fe6b4950377bdaced3a6e02eb",
+   "items": [
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 12,
+     "metadata": {
+      "nuisance": 0.7298002402966288,
+      "obs_img": 0.024385934411179533,
+      "obs_txt": -0.45952334472254774,
+      "oracle_pred": 0,
+      "render_version": "render_v1",
+      "split": "train",
+      "template_id": 0,
+      "template_set": "v1",
+      "text_category": 0,
+      "z_img": -0.7671098313763971,
+      "z_txt": -0.7671098313763971
+     },
+     "sample_id": "vl_matched/E/0/000004",
+     "split": "train",
+     "target": 0,
+     "text": "the code word is maple"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 13,
+     "metadata": {
+      "nuisance": 0.7413630755732086,
+      "obs_img": -0.30700471261282875,
+      "obs_txt": 0.2068342641664237,
+      "oracle_pred": 1,
+      "render_version": "render_v1",
+      "split": "train",
+      "template_id": 0,
+      "template_set": "v1",
+      "text_category": 1,
+      "z_img": -0.6611821345696688,
+      "z_txt": -0.6611821345696688
+     },
+     "sample_id": "vl_matched/E/0/000008",
+     "split": "train",
+     "target": 0,
+     "text": "the code word is cedar"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 14,
+     "metadata": {
+      "nuisance": -1.0525268087948725,
+      "obs_img": 0.3047808059975677,
+      "obs_txt": -1.3752683419812353,
+      "oracle_pred": 0,
+      "render_version": "render_v1",
+      "split": "validation",
+      "template_id": 0,
+      "template_set": "v1",
+      "text_category": 0,
+      "z_img": 0.032615632296648385,
+      "z_txt": 0.032615632296648385
+     },
+     "sample_id": "vl_matched/E/0/000000",
+     "split": "validation",
+     "target": 1,
+     "text": "the code word is maple"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 15,
+     "metadata": {
+      "nuisance": -0.17207341181847247,
+      "obs_img": -2.3737321744618516,
+      "obs_txt": -0.80199330501674,
+      "oracle_pred": 0,
+      "render_version": "render_v1",
+      "split": "validation",
+      "template_id": 1,
+      "template_set": "v1",
+      "text_category": 0,
+      "z_img": -1.487369568932608,
+      "z_txt": -1.487369568932608
+     },
+     "sample_id": "vl_matched/E/0/000003",
+     "split": "validation",
+     "target": 0,
+     "text": "this record is tagged maple"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 16,
+     "metadata": {
+      "nuisance": -0.8067894816033607,
+      "obs_img": -0.09736184011021587,
+      "obs_txt": 0.5529768391291743,
+      "oracle_pred": 1,
+      "render_version": "render_v1",
+      "split": "test",
+      "template_id": 1,
+      "template_set": "v1",
+      "text_category": 1,
+      "z_img": 0.4374796590480553,
+      "z_txt": 0.4374796590480553
+     },
+     "sample_id": "vl_matched/E/0/000001",
+     "split": "test",
+     "target": 1,
+     "text": "this record is tagged cedar"
+    },
+    {
+     "availability": {
+      "image": true,
+      "text": true
+     },
+     "image_index": 17,
+     "metadata": {
+      "nuisance": -0.3144250791849387,
+      "obs_img": -0.02595130053216166,
+      "obs_txt": -0.8084694781741151,
+      "oracle_pred": 0,
+      "render_version": "render_v1",
+      "split": "test",
+      "template_id": 1,
+      "template_set": "v1",
+      "text_category": 0,
+      "z_img": -0.6489716309508334,
+      "z_txt": -0.6489716309508334
+     },
+     "sample_id": "vl_matched/E/0/000002",
+     "split": "test",
+     "target": 0,
+     "text": "this record is tagged maple"
+    }
+   ],
+   "manifest_hash": "1c41ee7191a653f647e7ba1eae4a6c000653c7b4b8115845a3aca63ba1ce995d",
+   "oracle": {
+    "accuracy": {
+     "test": 0.829,
+     "train": 0.828,
+     "validation": 0.827
+    },
+    "inputs": [
+     "obs_img",
+     "text_category"
+    ],
+    "limitations": [
+     "obs_img is the latent image observation before pixel noise and rendering, so the oracle is an optimistic ceiling for image models (same convention as the legacy latent_observation_oracle)",
+     "it assumes the generative model and noise levels are known exactly",
+     "the text side is exact: it reads only the category stated by the caption, not obs_txt"
+    ],
+    "name": "text_aware_oracle",
+    "rule": "Bayes decision for y given obs_img and the caption category under the declared generative model"
+   },
+   "split_counts": {
+    "test": 1000,
+    "train": 3000,
+    "validation": 1000
+   }
+  }
+ },
+ "target": {
+  "dtype": "int64",
+  "shape": [],
+  "values": [
+   0,
+   1
+  ]
+ },
+ "uint8_range": [
+  -1.5,
+  2.5
+ ]
+}
