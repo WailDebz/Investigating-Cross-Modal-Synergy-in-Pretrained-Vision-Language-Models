@@ -1,4 +1,4 @@
-"""Reproducibility tests for Phase 1.1 (named seeds, sample identity, manifests)."""
+"""Reproducibility tests for Phase 1.1 (seeds, sample identity, manifests, splits, subsets)."""
 import numpy as np
 import pandas as pd
 import pytest
@@ -21,6 +21,12 @@ from synergy_bench.data.seeds import (
     make_rng,
     purpose_key,
     seed_sequence,
+)
+from synergy_bench.data.splits import (
+    assign_splits,
+    make_nested_train_subsets,
+    make_split_manifest,
+    validate_split_fractions,
 )
 
 
@@ -232,3 +238,135 @@ def test_manifest_rejects_bad_content():
     inconsistent.loc[0, "scenario"] = "A"
     with pytest.raises(ValueError, match="disagrees"):
         validate_manifest(inconsistent)
+
+
+# --------------------------------------------------------------------------- #
+# Fixed splits and nested training subsets
+# --------------------------------------------------------------------------- #
+GOLDEN_SPLIT_MANIFEST_HASH = "a8bb570031360744fe405db190d92a6d00ec7ea91a74c4a118892100d111c900"
+SUBSET_FRACTIONS = [0.05, 0.1, 0.25, 0.5, 1.0]
+
+
+def balanced_targets(n=5000, seed=0):
+    return make_rng(seed, "latents").integers(0, 2, n)
+
+
+def split_manifest(split_seed=0, n=5000):
+    return make_split_manifest("vl_matched", "C", 0, balanced_targets(n), split_seed=split_seed)
+
+
+def test_splits_are_deterministic():
+    assert manifest_hash(split_manifest()) == manifest_hash(split_manifest())
+
+
+def test_split_seed_changes_assignment_but_not_ids():
+    a, b = split_manifest(0), split_manifest(1)
+    assert list(a["sample_id"]) == list(b["sample_id"])
+    assert list(a["split"]) != list(b["split"])
+
+
+def test_split_sizes_and_stratification():
+    m = split_manifest()
+    sizes = m["split"].value_counts()
+    assert abs(sizes["train"] - 3000) <= 2
+    assert abs(sizes["validation"] - 1000) <= 2
+    assert abs(sizes["test"] - 1000) <= 2
+    overall = m["target"].mean()
+    for name in ("train", "validation", "test"):
+        assert abs(m.loc[m["split"] == name, "target"].mean() - overall) < 0.005
+
+
+def test_split_manifest_golden_value():
+    targets = [(i * 7) % 3 % 2 for i in range(200)]
+    m = make_split_manifest("vl_matched", "C", 0, targets)
+    assert manifest_hash(m) == GOLDEN_SPLIT_MANIFEST_HASH
+
+
+@pytest.mark.parametrize(
+    "bad",
+    [
+        (0.6, 0.2),
+        (0.6, 0.3, 0.2),
+        (0.8, 0.2, 0.0),
+        (1.0, 0.0, 0.0),
+        (0.7, 0.4, -0.1),
+        {"train": 0.6, "val": 0.2, "test": 0.2},
+        (0.6, float("nan"), 0.2),
+    ],
+)
+def test_invalid_split_fractions_fail_clearly(bad):
+    with pytest.raises(ValueError):
+        validate_split_fractions(bad)
+
+
+def test_split_fractions_accept_mapping_and_sequence():
+    expected = {"train": 0.6, "validation": 0.2, "test": 0.2}
+    assert validate_split_fractions(expected) == expected
+    assert validate_split_fractions((0.6, 0.2, 0.2)) == expected
+
+
+def test_assign_splits_rejects_bad_targets():
+    with pytest.raises(ValueError):
+        assign_splits([0, 1, 2, 1, 0, 1])
+    with pytest.raises(ValueError):
+        assign_splits([])
+    with pytest.raises(ValueError, match="empty"):
+        assign_splits([0, 1])
+
+
+def test_subsets_are_nested_and_complete():
+    m = split_manifest()
+    subsets = make_nested_train_subsets(m, SUBSET_FRACTIONS, seed=0)
+    assert list(subsets) == ["0.05", "0.1", "0.25", "0.5", "1"]
+    ordered = list(subsets.values())
+    for small, large in zip(ordered, ordered[1:]):
+        assert set(small) < set(large)
+    train_ids = set(m.loc[m["split"] == "train", "sample_id"])
+    assert set(subsets["1"]) == train_ids
+
+
+def test_subsets_are_class_balanced():
+    m = split_manifest()
+    train = m[m["split"] == "train"].set_index("sample_id")
+    train_rate = train["target"].mean()
+    subsets = make_nested_train_subsets(m, SUBSET_FRACTIONS, seed=0)
+    for ids in subsets.values():
+        n_pos = int(train.loc[ids, "target"].sum())
+        # Within one sample per class of the exact proportional allocation.
+        assert abs(n_pos - train_rate * len(ids)) <= 1.0
+
+
+def test_subsets_never_touch_validation_or_test():
+    m = split_manifest()
+    held_out = set(m.loc[m["split"] != "train", "sample_id"])
+    for ids in make_nested_train_subsets(m, SUBSET_FRACTIONS, seed=0).values():
+        assert held_out.isdisjoint(ids)
+
+
+def test_subsets_are_deterministic_and_seeded():
+    m = split_manifest()
+    a = make_nested_train_subsets(m, SUBSET_FRACTIONS, seed=0)
+    b = make_nested_train_subsets(m, SUBSET_FRACTIONS, seed=0)
+    c = make_nested_train_subsets(m, SUBSET_FRACTIONS, seed=1)
+    assert a == b
+    assert a["0.1"] != c["0.1"]
+    assert a["1"] == c["1"]
+
+
+def test_subsets_do_not_depend_on_requested_fractions():
+    m = split_manifest()
+    alone = make_nested_train_subsets(m, [0.1], seed=0)
+    together = make_nested_train_subsets(m, SUBSET_FRACTIONS, seed=0)
+    assert alone["0.1"] == together["0.1"]
+
+
+def test_subsets_are_sorted_by_sample_index():
+    m = split_manifest()
+    for ids in make_nested_train_subsets(m, SUBSET_FRACTIONS, seed=0).values():
+        assert ids == sorted(ids)
+
+
+@pytest.mark.parametrize("bad", [[0.0], [1.5], [-0.1], [], [0.1, 0.1], [float("nan")]])
+def test_invalid_subset_fractions_fail_clearly(bad):
+    with pytest.raises(ValueError):
+        make_nested_train_subsets(split_manifest(n=200), bad, seed=0)
