@@ -1,0 +1,24 @@
+{
+  "A": {
+    "applicable": true,
+    "reason": "The image attribute defining the binary target can be expressed without hidden information.",
+    "class_prompts": ["a blob on the left", "a blob on the right"]
+  },
+  "B": {
+    "applicable": false,
+    "reason": "The target depends on unique information from both modalities."
+  },
+  "C": {
+    "applicable": false,
+    "reason": "The XOR target depends on an independent text bit unavailable to an image-only prompt."
+  },
+  "D": {
+    "applicable": false,
+    "reason": "The target depends on both the image and text channels."
+  },
+  "E": {
+    "applicable": true,
+    "reason": "The clean image target uses the same directly expressible attribute as Scenario A.",
+    "class_prompts": ["a blob on the left", "a blob on the right"]
+  }
+}

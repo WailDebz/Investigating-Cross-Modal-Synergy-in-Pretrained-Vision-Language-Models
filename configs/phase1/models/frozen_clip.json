@@ -1,0 +1,8 @@
+{
+  "family": "frozen_clip",
+  "checkpoint": "openai/clip-vit-base-patch32",
+  "revision": "REPLACE_WITH_IMMUTABLE_COMMIT",
+  "head": "mlp",
+  "hidden_dim": 64,
+  "cache_dtype": "float32"
+}

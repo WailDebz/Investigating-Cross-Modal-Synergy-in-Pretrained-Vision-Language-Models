@@ -1,0 +1,9 @@
+{
+  "family": "from_scratch",
+  "embedding_dim": 64,
+  "head": "mlp",
+  "hidden_dim": 64,
+  "epochs": 25,
+  "learning_rate": 0.003,
+  "patience": 5
+}
