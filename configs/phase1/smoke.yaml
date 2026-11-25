@@ -1,0 +1,23 @@
+version: 1
+clip:
+  checkpoint: openai/clip-vit-base-patch32
+  revision: 3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268
+seeds: [0]
+batch_size: 4
+sample_limits:
+  train: 8
+  validation: 4
+  test: 4
+training:
+  epochs: 1
+  learning_rate: 0.0001
+  patience: 1
+model:
+  embedding_dim: 8
+  hidden_dim: 8
+  bilinear_projection_dim: 8
+experiments:
+  - data: data/vl_matched_C.yaml
+    families: [from_scratch, frozen_clip, adapted_clip]
+    modalities: [image, text]
+    head: mlp
