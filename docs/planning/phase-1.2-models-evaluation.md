@@ -305,3 +305,14 @@ Although Student B owns the integration commit, both students verify it:
 - Student B checks model freezing/adaptation, fusion behavior, evaluation isolation, and cost logs.
 - Both verify that direct comparisons use the same benchmark variant, modality set, sample IDs, and splits.
 - Both approve the final Phase 1 tag and document their contributions.
+
+## 8. Implementation status on `phase1.2/models-eval`
+
+- [x] 1.2-A - common model and result contracts.
+- [x] 1.2-B - shared linear, MLP, bilinear, and calibrated late-fusion heads.
+- [x] 1.2-C - lightweight from-scratch image/text family and validation training loop.
+- [x] 1.2-D - frozen CLIP wrapper, zero-shot utility, and sample-aligned embedding cache.
+- [x] 1.2-E - final-block/projection adaptation wrapper operating on raw batches.
+- [x] 1.2-F - metrics, validation-only selection, nested-subset checks, missingness, aggregation, costs, tables, and figures.
+- [ ] 1.2-G - blocked until Phase 1.1 merges its loader, manifests, environment, and smoke/full data configs.
+- [ ] 1.2-H - reporting CLI/script and implementation notes are present; the complete training reproduction command and root README update depend on 1.2-G.
