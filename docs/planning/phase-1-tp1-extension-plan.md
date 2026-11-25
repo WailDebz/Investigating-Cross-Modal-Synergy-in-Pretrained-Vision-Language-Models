@@ -288,7 +288,9 @@ Running every head for every family on every scenario is optional only after the
 |       `-- full.yaml
 |-- docs/
 |   |-- planning/
-|   |   `-- phase-1-tp1-extension-plan.md
+|   |   |-- phase-1-tp1-extension-plan.md
+|   |   |-- phase-1.1-data-reproducibility.md
+|   |   `-- phase-1.2-models-evaluation.md
 |   |-- references/
 |   |   |-- professor-project-specification.pdf
 |   |   `-- track-1-research-proposal.pdf
@@ -343,6 +345,26 @@ Migration rules:
 No migration in this section should happen until this plan is approved.
 
 ## 9. Step-by-step implementation roadmap
+
+### Parallel two-person delivery
+
+Phase 1 can be developed on two branches with an explicit ownership boundary:
+
+- **Phase 1.1 - Data and reproducibility foundation:** Milestones 0-3, including legacy preservation, seeds, manifests, splits, the extended dataset, rendering, text, oracles, and dataset tests. Detailed plan: [`phase-1.1-data-reproducibility.md`](phase-1.1-data-reproducibility.md).
+- **Phase 1.2 - Models and evaluation:** Milestones 4-8, including the three model families, fusion heads, embedding caches, unified evaluation, figures/tables, and reproduction command. It starts in parallel against a contract fixture and integrates with the real Phase 1.1 dataset after Phase 1.1 merges. Detailed plan: [`phase-1.2-models-evaluation.md`](phase-1.2-models-evaluation.md).
+
+This division does not make the scientific pipeline independent: Phase 1.2 consumes the data interface produced by Phase 1.1. It does make day-to-day file ownership independent enough for simultaneous work.
+
+Recommended merge order:
+
+1. Commit this planning package on `main`; both branches start from that same commit.
+2. Develop `phase1/1.1-data-reproducibility` and `phase1/1.2-models-evaluation` simultaneously.
+3. Phase 1.2 uses only the agreed contract fixture while Phase 1.1 is open; it does not copy or reimplement the generator.
+4. Review and merge Phase 1.1 into `main` first.
+5. Rebase Phase 1.2 onto the updated `main`, connect it to the real dataset, and run integration smoke tests.
+6. Review and merge Phase 1.2 into `main` only after the full Phase 1 smoke command passes.
+
+Shared root files (`README.md`, `pyproject.toml`, `.gitignore`, full/smoke configs) have sequential ownership: Phase 1.1 creates the initial environment and ignore rules; Phase 1.2 updates them only after rebasing onto the merged Phase 1.1 work. This rule is specifically intended to prevent avoidable merge conflicts.
 
 ### Milestone 0 - Freeze and document the TP1 baseline
 
