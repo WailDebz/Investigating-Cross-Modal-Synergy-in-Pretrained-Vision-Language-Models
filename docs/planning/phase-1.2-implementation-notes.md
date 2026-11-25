@@ -11,9 +11,9 @@
 - Validation checkpointing, locked-test selection helpers, nested-subset validation, metrics, cost fields, aggregation, CSV tables, and SVG figures.
 - A reporting CLI and reproduction script for committed/raw result rows.
 
-## Dependency checklist for integration
+## Integrated environment
 
-Phase 1.1 owns the environment manifest. When its branch merges, add compatible pinned versions of:
+The merged environment manifest includes compatible versions of:
 
 - PyTorch;
 - Transformers;
@@ -21,16 +21,19 @@ Phase 1.1 owns the environment manifest. When its branch merges, add compatible 
 
 No plotting dependency is required; Phase 1.2 writes a small SVG directly from aggregated raw rows.
 
-## Required integration inputs from Phase 1.1
+## Phase 1.1 integration
 
-The real-data integration cannot be completed until Phase 1.1 provides:
+Phase 1.1 provides:
 
 - `build_dataset(config)` and `load_split(bundle, split_name)`;
 - stable sample IDs and split manifests;
 - `vl_matched` image-text samples following the documented public batch contract;
 - the final smoke/full data configurations and their manifest hashes.
 
-Phase 1.2 must then replace its test fixture with these loaders, compose the final smoke/full configuration, and run all three model families on identical sample IDs.
+The integration runner now consumes these loaders directly, writes the exact manifest,
+and runs all three model families on identical sample IDs. The committed integration
+test uses a CLIP test double; `scripts/reproduce_phase1.sh smoke` additionally exercises
+the pinned real checkpoint.
 
 ## Scientific reporting rules
 
@@ -43,10 +46,12 @@ Phase 1.2 must then replace its test fixture with these loaders, compose the fin
 
 ## Reproduction command
 
-After raw result rows exist:
+For a complete smoke run:
 
 ```bash
-scripts/reproduce_phase1.sh artifacts/results/raw.jsonl
+scripts/reproduce_phase1.sh smoke
 ```
 
-This reruns tests and regenerates `artifacts/tables/summary.csv` and `artifacts/figures/accuracy.svg`. A complete training command must be added only after the Phase 1.1 loader and final experiment configurations merge.
+This runs tests and training, then regenerates `artifacts/tables/summary.csv` and
+`artifacts/figures/accuracy.svg` from `artifacts/results/raw.jsonl`. Use `full` only on
+appropriate compute; its three-seed 5,000-sample matrix is intentionally much larger.

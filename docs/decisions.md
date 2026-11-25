@@ -56,17 +56,17 @@ The text channel replaces the legacy signal channel; signal and tabular are not 
 - The caption states only `text_category = 1[obs_txt > 0]`, computed from the text channel's own noisy observation. For C this flips `b_txt` with probability `Phi(-1 / sigma_txt)` (0.048 at `text.noise = 1`).
 - Template set `v1`: four frames shared by both categories, filled with the neutral code word `maple` (category 0) or `cedar` (category 1). No position, orientation, colour or shape word. Both words have 5 characters and 1 whitespace token, so for a given frame both categories give captions of identical length.
 - `template_id` is drawn uniformly from `make_rng(data_seed, "text_template", index)`, independently of the category and the target.
-- **To confirm:** "token" means whitespace token; the BPE token counts of `maple`/`cedar` in the CLIP tokenizer have not been checked yet (Phase 1.2).
+- `maple` and `cedar` each map to one token under the pinned CLIP tokenizer revision used by Phase 1.2.
 - Captions come from a closed set of 8 strings, so caption duplication is by design; the audits check for duplicate sample IDs and duplicate latent rows instead.
 
 ## D6 - Metadata access (decided)
 
 `load_split(bundle, split, with_metadata=False)`: without the flag `item["metadata"] == {}`; with it, the analysis metadata (true and noisy latents, nuisance, text category, template ID, oracle prediction, split, render version, template set). The same values are always available in the separate latent manifest (`bundle.latents`, `latents.csv` in the cache folder), never in the contract manifest.
 
-## D7 - Images (decided, with one point to confirm)
+## D7 - Images (decided)
 
 - Grayscale, replicated to RGB at load time; no colour attribute.
-- **To confirm with Student B:** `item["image"] = uint8 / 255` as float32 in [0, 1], `[C, H, W]`, without mean/std normalization. Model-specific preprocessing (e.g. CLIP resize/normalize) is applied by Phase 1.2 on top of this fixed transform.
+- `item["image"] = uint8 / 255` as float32 in [0, 1], `[C, H, W]`, without mean/std normalization. Phase 1.2 passes `do_rescale=False` to CLIP, then applies the pinned processor's resize and normalization exactly once.
 - **To confirm:** `image.channels` accepts 1 (legacy-style grayscale) or 3 (contract default).
 
 ## D8 - uint8 mapping, storage and memory (decided, with one point to confirm)

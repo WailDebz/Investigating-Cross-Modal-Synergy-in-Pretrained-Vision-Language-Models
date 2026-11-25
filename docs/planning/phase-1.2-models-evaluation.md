@@ -314,5 +314,5 @@ Although Student B owns the integration commit, both students verify it:
 - [x] 1.2-D - frozen CLIP wrapper, zero-shot utility, and sample-aligned embedding cache.
 - [x] 1.2-E - final-block/projection adaptation wrapper operating on raw batches.
 - [x] 1.2-F - metrics, validation-only selection, nested-subset checks, missingness, aggregation, costs, tables, and figures.
-- [ ] 1.2-G - blocked until Phase 1.1 merges its loader, manifests, environment, and smoke/full data configs.
-- [ ] 1.2-H - reporting CLI/script and implementation notes are present; the complete training reproduction command and root README update depend on 1.2-G.
+- [x] 1.2-G - integrated with the Phase 1.1 loaders, manifest hashes, environment, and composed smoke/full configurations.
+- [x] 1.2-H - one-command training/report reproduction, root README, artifact layout, limitations, and AI-use declaration.
