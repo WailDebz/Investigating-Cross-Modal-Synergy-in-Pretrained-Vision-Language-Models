@@ -13,6 +13,8 @@ dependencies = [
     "pandas>=2.0",
     "pyyaml>=6.0",
     "torch>=2.2",
+    "transformers>=4.46,<5",
+    "pillow>=10",
 ]
 
 [project.optional-dependencies]

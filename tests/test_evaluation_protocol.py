@@ -63,7 +63,9 @@ class RunResultTests(unittest.TestCase):
 
     def test_selection_does_not_touch_test_evaluator(self):
         test_calls = []
-        selected = select_on_validation(("small", "large"), lambda value: len(value))
+        selected = select_on_validation(
+            ("small", "large"), lambda value: {"small": 0.0, "large": 1.0}[value]
+        )
         self.assertEqual(test_calls, [])
 
         result = evaluate_locked_test(selected, lambda value: test_calls.append(value) or value)

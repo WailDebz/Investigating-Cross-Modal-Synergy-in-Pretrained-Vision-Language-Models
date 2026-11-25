@@ -32,7 +32,7 @@ class FakeCLIP(nn.Module):
 
 
 class FakeProcessor:
-    def __call__(self, images, text, return_tensors, padding):
+    def __call__(self, images, text, return_tensors, padding, **kwargs):
         return {
             "pixel_values": images,
             "input_ids": torch.tensor([[len(value) % 16] for value in text]),

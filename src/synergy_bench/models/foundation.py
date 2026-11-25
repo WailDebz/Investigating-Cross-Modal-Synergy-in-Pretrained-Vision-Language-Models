@@ -53,7 +53,7 @@ class FrozenCLIP(nn.Module):
             model_id, revision=revision, local_files_only=local_files_only
         )
         processor = CLIPProcessor.from_pretrained(
-            model_id, revision=revision, local_files_only=local_files_only
+            model_id, revision=revision, local_files_only=local_files_only, use_fast=False
         )
         return cls(model, processor, model_id, revision)
 
@@ -68,6 +68,7 @@ class FrozenCLIP(nn.Module):
             text=list(batch.modalities["text"]),
             return_tensors="pt",
             padding=True,
+            do_rescale=False,
         )
         inputs = {name: value.to(self.device) for name, value in inputs.items()}
         image = clip_feature_tensor(
@@ -93,6 +94,7 @@ class FrozenCLIP(nn.Module):
             text=list(class_prompts),
             return_tensors="pt",
             padding=True,
+            do_rescale=False,
         )
         inputs = {name: value.to(self.device) for name, value in inputs.items()}
         image = F.normalize(

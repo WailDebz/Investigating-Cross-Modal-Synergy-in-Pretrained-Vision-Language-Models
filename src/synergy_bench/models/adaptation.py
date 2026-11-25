@@ -62,6 +62,7 @@ class AdaptiveCLIPClassifier(nn.Module):
             text=list(batch.modalities["text"]),
             return_tensors="pt",
             padding=True,
+            do_rescale=False,
         )
         inputs = {name: value.to(device) for name, value in inputs.items()}
         embeddings = {

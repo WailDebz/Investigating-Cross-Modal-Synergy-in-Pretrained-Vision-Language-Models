@@ -131,9 +131,10 @@ class LateFusionHead(_ProjectedHead):
 class EmbeddingClassifier(nn.Module):
     """Apply a fusion head to already-extracted modality embeddings."""
 
-    def __init__(self, fusion: _ProjectedHead) -> None:
+    def __init__(self, fusion: _ProjectedHead, encoder: nn.Module | None = None) -> None:
         super().__init__()
         self.fusion = fusion
+        self.encoder = encoder
 
     def forward(self, batch: ModelBatch) -> Tensor:
         embeddings = {name: batch.modalities[name] for name in self.fusion.modalities}

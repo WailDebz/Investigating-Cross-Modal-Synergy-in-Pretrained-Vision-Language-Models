@@ -1,7 +1,7 @@
 {
   "family": "adapted_clip",
   "checkpoint": "openai/clip-vit-base-patch32",
-  "revision": "REPLACE_WITH_IMMUTABLE_COMMIT",
+  "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
   "adaptation": "final_block_and_projection",
   "head": "mlp",
   "learning_rate": 0.00001,
