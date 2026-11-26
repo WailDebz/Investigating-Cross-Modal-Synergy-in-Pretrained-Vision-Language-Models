@@ -65,9 +65,3 @@ artifacts/
 - Zero-shot CLIP is applicable only to scenarios declared in
   `configs/phase1/models/zero_shot_applicability.json`.
 - The smoke workflow is an engineering check, not evidence for Phase 2 hypotheses.
-
-## AI-use declaration
-
-AI assistance was used to help plan, implement, and review repository code and
-documentation. The authors remain responsible for validating the scientific design,
-running the experiments, reviewing generated changes, and interpreting results.
